@@ -45,6 +45,8 @@ For now, we just regard "type" as "set". Integers have type Int, and the convers
 (* Empty type or Empty set *) 
 Inductive Empty : Set := .
 
+(* In CoqIDE, press Ctrl + rightarrow to type-check things defined till the cursor, Ctrl + downarrow to type-check the next clause, Ctrl + uparrow to type-check the previous clause, and Ctrl + End to type-check the whole file. *)
+
 (* Singleton type or Sinlgeton set *)
 Inductive Singleton : Set := singleton.
 
