@@ -97,7 +97,7 @@ Definition f4 (s : Singleton) :=
 *)
 
 (*
-In fact, there is no fucntion to Empty from any non-empty set. f0 is the only possible function to Empty.
+In fact, there is no function to Empty from any non-empty set. f0 is the only possible function to Empty.
 *)
 
 Inductive Bool : Set := true | false.
