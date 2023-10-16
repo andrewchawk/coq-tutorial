@@ -123,7 +123,7 @@ Inductive Nat : Set :=
 (* Notations for first 10 numbers. *)
 Notation "0" := zero.
 Notation "1" := (succ zero).
-Notation "2" := (succ (succ zero)).
+Notation "2" := (succ 1).
 Notation "3" := (succ 2).
 Notation "4" := (succ 3).
 Notation "5" := (succ 4).
