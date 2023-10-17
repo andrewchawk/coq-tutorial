@@ -372,7 +372,7 @@ end.
 Lemma Less_succ_inv : forall (x y : Nat), succ x <' succ y -> x <' y.
 Proof.
 intros x y H.
-apply (LEsucc_inv ((succ x)) (y) H).
+apply (LEsucc_inv (succ x) y H).
 Qed.
 
 Definition not_succ_LE_zero (x : Nat) (p : succ x =< 0) : Empty :=
@@ -466,7 +466,7 @@ Fixpoint decide_order (a : Nat) (b : Nat) : (a =< b) \_/ (b <' a) :=
    | zero => or_introl (LEzero b)
    | succ a' => 
       match b with
-        | zero => or_intror (zero_less_succ (a'))
+        | zero => or_intror (zero_less_succ a')
         | succ b' => 
           match decide_order a' b' with
             | or_introl p => or_introl (LEsucc _ _ p)
@@ -480,10 +480,10 @@ Fixpoint decide_order (a : Nat) (b : Nat) : (a =< b) \_/ (b <' a) :=
 Fixpoint insert (x : Nat) (l : ListNat) : ListNat :=
   match l with 
     | nil => con x nil
-    | con h (t) => 
+    | con h t => 
       match decide_order x h with
-        | or_introl p => con x (con h (t))
-        | or_intror p => con h (insert x (t))
+        | or_introl p => con x (con h t)
+        | or_intror p => con h (insert x t)
       end
   end.
 
