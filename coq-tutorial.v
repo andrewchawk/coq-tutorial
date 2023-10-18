@@ -53,8 +53,8 @@ Inductive Empty : Set := .
 Inductive Singleton : Set := singleton.
 
 (*
-Question: these two are so simple, what use do they have?
-Answer: a lot.
+Question: These two are so simple. What use do they have?
+Answer: A lot.
 *)
 
 (*
@@ -114,7 +114,7 @@ Definition and (b1 : Bool) (b2 : Bool) : Bool :=
     | false => false
   end.
 
-(*exercise: define or, implies, xor. *)
+(*exercise: define or, implies, and xor. *)
 
 
 (* Natural numbers starting from 0. *)
@@ -217,19 +217,21 @@ Definition equalBB (a : Bool) (b : Bool) : Bool :=
       end.  
 
 (* 
-We saw some redundancy there, awkwardly. But still, what does it mean by "always equals to"? The equality test functions we defined don't guarantee "always equality" obviously, since they might return false. This method might be enough for testing in software engineering. We have a test function, we just run thousands of test cases to see if we always get true return. It is not a proof. Also we have infinite many inputs, the test can never be complete.
+We saw some redundancy there, awkwardly. But still, what does it mean by "always equals to"? The equality test functions we defined don't guarantee "always equality" obviously, since they might return false. This method might be enough for testing in software engineering. We have a test function; we just run thousands of test cases to see if we always get "true". It is not a proof. Also, we have infinitely many inputs, so the test can never be complete.
 
 The magical leap happens here (comparing to ordinary programming languages).
 
-We know a fucntion "always" return a value when fed with an input. We might be able to use this feature to capture "always". We know for a function, there must be a domain and a codomain, in other words, an input type and an output type. Let the domain be (Nat x Nat x Nat), what is the codomain? A type about "equality". We need "equality type"!
+We know a function "always" returns a value when fed with an input. We might be able to use this feature to capture "always". We know that for a function, there must be a domain and a codomain, i.e., an input type and an output type. Let the domain be (Nat x Nat x Nat), what is the codomain? A type about "equality". We need an "equality type"!
 
-Given natural numbers a b, we want a = b to be a type! not a test whether a equals b, but a type. Not a value, but a set, a type. We want that there exits a function from Nat x Nat x Nat to lhs = rhs, whenever lhs is equal to the rhs, and we want that there is no fucntion from Nat x Nat x Nat to lhs = rhs if they are not equal.
+Given natural numbers a b, we want a = b to be a type -- not a test of whether a equals b, but a type: not a value, but a set, a type. We want that there exits a function from Nat x Nat x Nat to lhs = rhs, whenever lhs is equal to the rhs, and we want that there is no fucntion from Nat x Nat x Nat to lhs = rhs if they are not equal.
 
-Recall, Empty is such that there is no function to it (excepty from Empty). So we define lhs = rhs to be Empty if lhs is not equal to rhs. I forgot to mention that there is always an unique function from any set to Singleton, which just map everything to singleton. Lets try to define lhs=rhs to be Singleton if lhs is equal to rhs.
+Recall that Empty is such that there is no function to it (excepty from Empty). So we define lhs = rhs to be Empty if lhs is not equal to rhs. I forgot to mention that there is always a unique function from any set to Singleton, which just maps everything to singleton. Let's try to define lhs=rhs to be Singleton if lhs is equal to rhs.
 
-To sum up, lhs=rhs is either Empty or Singleton, depending on what values lhs and rhs are. In other word, lhs=rhs is a family of types (either Empty or Singleton) parametered by lhs and rhs, which are value. Such a pattern, type family indexed by values of another type, is call "dependent type". Both Coq and Agda support dependent types. Dependent types are essential in proof assistant, since we are interested in showing some value satisfty some property, where property is a set or a type.
+To sum up, lhs=rhs is either Empty or Singleton, depending on what values lhs and rhs are. In other words, lhs=rhs is a family of types (either Empty or Singleton) parametered by lhs and rhs, which are values. Such a pattern, a type family indexed by values of another type, is a "dependent type". Both Coq and Agda support dependent types. Dependent types are essential in proof assistants, since we are interested in showing some value satisfies some property, where a property is a set or a type.
 
-In summary, a function is powerful enough to express: 1) forall quantification; 2) "always" property, which will be expoited only if we have Equality type.
+In summary, a function is powerful enough to express:
+  1) forall quantification;
+  2) "always" property, which will be expoited only if we have Equality type.
 
 *)
 
@@ -302,22 +304,22 @@ lemma-add-assoc (succ x) y z = context succ ih
 *)
 
 
-(* Now, let's verity insertion sort. *)
+(* Now, let's verify insertion sort. *)
 
 (* 
-There are a lot to define:
+There are a lot of things to define:
   1) what are we sorting?
-  2) what is the sorting according to?
-  3) how to compare two natural number?
+  2) what is the sorting comparison?
+  3) how do we compare two natural numbers?
   4) what is insertion?
   5) what does correctness mean?
   etc..
 *)
 
 (* 
-If we implement sorting in C, we will probably use array. In some other lauguage, it might be called Vector. One problem with that, vector or array always has a size or length, but we might have more things to sort than that length limitation.
+If we implement sorting in C, we will probably use array. In some other language, it might be called Vector. One problem with that: vector or array always has a size or length, but we might have more things to sort than that length limitation.
 
-In Coq, or Agda, Haskell, or any other language that supports infinite long list, things are more elegant. We just sort on a list. Nota that the difference between vector and list is that vector has a fixed length (however large it is, it is finite), but list can be of any size. Let's define List.
+In Coq, or Agda, Haskell, or any other language that supports infinitely long lists, things are more elegant. We just sort on a list. Note that the difference between vectors and lists is that a vector has a fixed length (however large it is, it is finite), but a list can be of any size. Let's define ListNat.
 *)
 
 Inductive ListNat : Set := 
@@ -382,7 +384,7 @@ match p with
 end.
 
 (*
-Transitivity of LessOrEqual relation. This definition is quite covluted. The main techniuque use here is "dependent pattern matching". See explainations here
+Transitivity of the LessOrEqual relation. This definition is quite convoluted. The main technique used here is "dependent pattern matching". See explanations here:
 https://stackoverflow.com/questions/12544469/impossible-pattern-in-writing-implicit-proof-object-in-coq
 *)
 
@@ -434,7 +436,7 @@ induction x.
 Qed.
 
 (*
-This is also quite convoluted. Also using "dependent pattern matching" technique. 
+Similarly, this is quite convoluted and uses the "dependent pattern matching" technique.
 *)
 Fixpoint LE_antisym (x y : Nat) (xy : x =< y) (yx : y =< x) : x == y :=
 match x as x1 return (forall (y : Nat), x1 =< y -> y =< x1 -> x1 == y) with
@@ -449,7 +451,7 @@ match x as x1 return (forall (y : Nat), x1 =< y -> y =< x1 -> x1 == y) with
 end y xy yx.
 
 (*
-With BHK interpretion in mind, we can definte logic "or" of two proposition.
+With BHK interpretation in mind, we can define the logical disjunction.
 *)
 Inductive OR (A B : Set) : Set :=
   | or_introl : A -> OR A B
@@ -458,7 +460,7 @@ Inductive OR (A B : Set) : Set :=
 Notation "A \_/ B" := (OR A B) (at level 85, right associativity).
 
 Check or_introl.
-(* Check or_introl show the type of or_introl "forall A B : Set, A -> A \_/ B". If calling or_introl "or_introl A B a", A can be infered from a. If from context, B is also inferable, we use the following command to tell Coq, we will omit type arguments A and B as often as possible. *)
+(* Check or_introl show the type of or_introl "forall A B : Set, A -> A \_/ B". If calling or_introl "or_introl A B a", A can be infered from a. If from context, B is also inferable, we use the following command to tell Coq that we will omit type arguments A and B as often as possible. *)
 Arguments or_introl [A B] _, [A] B _.
 Arguments or_intror [A B] _, A [B] _.
 
@@ -477,7 +479,7 @@ Fixpoint decide_order (a : Nat) (b : Nat) : (a =< b) \_/ (b <' a) :=
       end
   end.
 
-(* Have defined order on Nat and all kinds of properties of order. We are ready to define insertion sort. *)
+(* We have defined order on Nat and all kinds of properties of order. We are ready to define insertion sort. *)
 
 Fixpoint insert (x : Nat) (l : ListNat) : ListNat :=
   match l with 
@@ -518,7 +520,7 @@ Qed.
 
 Print eg1.
 
-(* A non-empty list is sorted implies the tail is sorted. *)
+(* A non-empty list is sorted only if the tail is sorted. *)
 Definition sorted_tail (h : Nat) (t : ListNat) (H : sorted (h ; t)) : sorted t :=
 match H with 
 (*  | sort_nil => sort_nil *)
@@ -540,7 +542,7 @@ Compute (count_occ (3;2;4;5;2;2;nil) 2).
 Definition permut (l1 l2 : ListNat) :=
    forall x:Nat, count_occ l1 x == count_occ l2 x.
 
-(* Similar to OR connective, we can define logic AND. *)
+(* Much like we defined OR, we can define AND. *)
 Inductive AND (P Q : Set) : Set :=
   | conj : P -> Q -> AND P Q.
 
