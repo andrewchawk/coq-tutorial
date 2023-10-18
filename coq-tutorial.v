@@ -34,6 +34,8 @@ sudo snap install coq-prover
 Or refer to here,
 https://snapcraft.io/coq-prover
 
+If you are using some other operating system which has a package manager, then check the list of packages. If you do not find CoqIDE, then consider making a port.
+
 *)
 
 
