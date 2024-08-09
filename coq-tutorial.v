@@ -35,6 +35,8 @@ Or refer to here, https://snapcraft.io/coq-prover
 
 If you are using some other operating system which has a package manager, then check the list of packages. If you do not find CoqIDE, then consider making a port.
 
+If you are using some other operating system which has a package manager, then check the list of packages. If you do not find CoqIDE, then consider making a port.
+
 *)
 
 
@@ -100,8 +102,9 @@ Definition f4 (s : Singleton) :=
   end.
 *)
 
-(* In fact, there is no fucntion to Empty from any non-empty set. f0
+(*
 In fact, there is no function to Empty from any non-empty set. f0 is the only possible function to Empty.
+*)
 
 Inductive Bool : Set := true | false.
 
@@ -222,44 +225,20 @@ Definition equalBB (a : Bool) (b : Bool) : Bool :=
               end
       end.  
 
-(* We saw some redundancy there, awkwardly. But still, what does it
-We saw some redundancy there, awkwardly. But still, what does it mean by "always equals to"? The equality test functions we defined don't guarantee "always equality" obviously, since they might return false. This method might be enough for testing in software engineering. We have a test function; we just run thousands of test cases to see if we always get "true". It is not a proof. Also, we have infinitely many inputs, so the test can never be complete.
-don't guarantee "always equality" obviously, since they might return
-false. This method might be enough for testing in software
-engineering. We have a test function, we just run thousands of test
-cases to see if we always get true return. It is not a proof. Also we
-have infinite many inputs, the test can never be complete.
 
-The magical leap happens here (comparing to ordinary programming
-languages).
+(* 
+We saw some redundancy there, awkwardly. But still, what does it mean by "always equals to"? The equality test functions we defined don't guarantee "always equality" obviously, since they might return false. This method might be enough for testing in software engineering. We have a test function; we just run thousands of test cases to see if we always get "true". It is not a proof. Also, we have infinitely many inputs, so the test can never be complete.
+
+The magical leap happens here (comparing to ordinary programming languages).
 
 We know a function "always" returns a value when fed with an input. We might be able to use this feature to capture "always". We know that for a function, there must be a domain and a codomain, i.e., an input type and an output type. Let the domain be (Nat x Nat x Nat), what is the codomain? A type about "equality". We need an "equality type"!
-might be able to use this feature to capture "always". We know for a
-function, there must be a domain and a codomain, in other words, an
-input type and an output type. Let the domain be (Nat x Nat x Nat),
-what is the codomain? A type about "equality". We need "equality
-type"!
 
 Given natural numbers a b, we want a = b to be a type -- not a test of whether a equals b, but a type: not a value, but a set, a type. We want that there exits a function from Nat x Nat x Nat to lhs = rhs, whenever lhs is equal to the rhs, and we want that there is no fucntion from Nat x Nat x Nat to lhs = rhs if they are not equal.
-whether a equals b, but a type. Not a value, but a set, a type. We
-want that there exits a function from Nat x Nat x Nat to lhs = rhs,
-whenever lhs is equal to the rhs, and we want that there is no
-fucntion from Nat x Nat x Nat to lhs = rhs if they are not equal.
 
 Recall that Empty is such that there is no function to it (excepty from Empty). So we define lhs = rhs to be Empty if lhs is not equal to rhs. I forgot to mention that there is always a unique function from any set to Singleton, which just maps everything to singleton. Let's try to define lhs=rhs to be Singleton if lhs is equal to rhs.
-Empty). So we define lhs = rhs to be Empty if lhs is not equal to
-rhs. I forgot to mention that there is always an unique function from
-any set to Singleton, which just map everything to singleton. Lets try
-to define lhs=rhs to be Singleton if lhs is equal to rhs.
 
 To sum up, lhs=rhs is either Empty or Singleton, depending on what values lhs and rhs are. In other words, lhs=rhs is a family of types (either Empty or Singleton) parametered by lhs and rhs, which are values. Such a pattern, a type family indexed by values of another type, is a "dependent type". Both Coq and Agda support dependent types. Dependent types are essential in proof assistants, since we are interested in showing some value satisfies some property, where a property is a set or a type.
-values lhs and rhs are. In other word, lhs=rhs is a family of types
-(either Empty or Singleton) parametered by lhs and rhs, which are
-value. Such a pattern, type family indexed by values of another type,
-is call "dependent type". Both Coq and Agda support dependent
-types. Dependent types are essential in proof assistant, since we are
-interested in showing some value satisfty some property, where
-property is a set or a type.
+
 
 In summary, a function is powerful enough to express:
   1) forall quantification;
@@ -347,16 +326,12 @@ There are a lot of things to define:
   etc..
 *)
 
-(* If we implement sorting in C, we will probably use array. In some
+
+(* 
 If we implement sorting in C, we will probably use array. In some other language, it might be called Vector. One problem with that: vector or array always has a size or length, but we might have more things to sort than that length limitation.
-vector or array always has a size or length, but we might have more
-things to sort than that length limitation.
 
 In Coq, or Agda, Haskell, or any other language that supports infinitely long lists, things are more elegant. We just sort on a list. Note that the difference between vectors and lists is that a vector has a fixed length (however large it is, it is finite), but a list can be of any size. Let's define ListNat.
-long list, things are more elegant. We just sort on a list. Nota that
-the difference between vector and list is that vector has a fixed
-length (however large it is, it is finite), but list can be of any
-size. Let's define List.  *)
+*)
 
 Inductive ListNat : Set := 
   | nil : ListNat
@@ -422,9 +397,10 @@ Definition not_succ_LE_zero (x : Nat) (p : succ x =< 0) : Empty :=
 match p with
 end.
 
-(* Transitivity of LessOrEqual relation. This definition is quite
+
+(*
 Transitivity of the LessOrEqual relation. This definition is quite convoluted. The main technique used here is "dependent pattern matching". See explanations here:
-matching". See explainations here
+
 https://stackoverflow.com/questions/12544469/impossible-pattern-in-writing-implicit-proof-object-in-coq
 *)
 
@@ -485,8 +461,10 @@ induction x.
   - exact (IHx (Less_succ_inv x x H)).
 Qed.
 
-(* This is also quite convoluted. Also using "dependent pattern
+
+(*
 Similarly, this is quite convoluted and uses the "dependent pattern matching" technique.
+*)
 
 Fixpoint LE_antisym (x y : Nat) (xy : x =< y) (yx : y =< x) : x == y :=
 match x as x1 return (forall (y : Nat), x1 =< y -> y =< x1 -> x1 == y) with
@@ -511,10 +489,8 @@ Notation "A \_/ B" := (OR A B) (at level 85, right associativity).
 
 Check or_introl.
 (* Check or_introl show the type of or_introl "forall A B : Set, A -> A \_/ B". If calling or_introl "or_introl A B a", A can be infered from a. If from context, B is also inferable, we use the following command to tell Coq that we will omit type arguments A and B as often as possible. *)
-A \_/ B". If calling or_introl "or_introl A B a", A can be infered
-from a. If from context, B is also inferable, we use the following
-command to tell Coq, we will omit type arguments A and B as often as
-possible. *)
+
+
 Arguments or_introl [A B] _, [A] B _.
 Arguments or_intror [A B] _, A [B] _.
 
@@ -534,7 +510,6 @@ Fixpoint decide_order (a : Nat) (b : Nat) : (a =< b) \_/ (b <' a) :=
   end.
 
 (* We have defined order on Nat and all kinds of properties of order. We are ready to define insertion sort. *)
-are ready to define insertion sort. *)
 
 Fixpoint insert (x : Nat) (l : ListNat) : ListNat :=
   match l with 
